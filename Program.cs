@@ -52,7 +52,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.WebHost.UseUrls("http://10.0.2.2:7072");
+//builder.WebHost.UseUrls("http://10.0.2.2:7072");
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://*:{port}");
 
 // Allow CORS for College2Career React App
 builder.Services.AddCors(options =>
@@ -60,7 +63,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("College2Career",
         policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("https://college2career-frontend.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -101,11 +104,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+app.UseSwaggerUI();
+//}
 
 app.UseCors("College2Career");
 
@@ -113,7 +116,7 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.MapControllers();
 
