@@ -63,7 +63,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("College2Career",
         policy =>
     {
-        policy.WithOrigins("https://college2career-frontend.vercel.app")
+        policy.WithOrigins("https://college2career-frontend.vercel.app",
+            "https://college2career-frontend.vercel.app",
+                "https://college2career-frontend-git-main-aaditya-pathas-projects.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
